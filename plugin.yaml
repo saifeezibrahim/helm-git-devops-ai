@@ -1,0 +1,11 @@
+name: "helm-git"
+version: "1.5.2"
+description: |-
+  Get non-packaged Charts directly from Git.
+downloaders:
+- command: "helm-git"
+  protocols:
+    - "git+file"
+    - "git+ssh"
+    - "git+https"
+    - "git+http"

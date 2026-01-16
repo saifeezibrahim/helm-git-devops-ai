@@ -1,0 +1,49 @@
+{
+  "name": "helm-git",
+  "private": true,
+  "version": "1.5.2",
+  "description": "npm tooling for helm-git Helm downloader plugin",
+  "scripts": {
+    "test": "bats --print-output-on-failure tests/*-*.bats",
+    "test:e2e": "bats --print-output-on-failure tests/e2e.bats",
+    "lint": "editorconfig-checker; shellcheck 'helm-git' *.sh tests/*.bash",
+    "bump": "test -z ${VERSION} || (echo bumping to v${VERSION} && npm run bump:helm-plugin && npm run bump:readme && npm run bump:npm)",
+    "bump:helm-plugin": "sed -i \"s/version: \\\".*\\\"/version: \\\"${VERSION}\\\"/\" plugin.yaml",
+    "bump:readme": "sed -E -i \"s/helm-git --version .*$/helm-git --version ${VERSION}/\" README.md",
+    "bump:npm": "npm version --allow-same-version --no-git-tag-version ${VERSION}",
+    "release": "semantic-release",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aslafy-z/helm-git.git"
+  },
+  "author": "Zadkiel <hello@zadkiel.fr>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aslafy-z/helm-git/issues"
+  },
+  "homepage": "https://github.com/aslafy-z/helm-git#readme",
+  "devDependencies": {
+    "@semantic-release/exec": "7.1.0",
+    "@semantic-release/git": "10.0.1",
+    "bats": "1.12.0",
+    "REDACTED": "9.1.0",
+    "editorconfig-checker": "6.1.1",
+    "husky": "9.1.7",
+    "lint-staged": "16.2.7",
+    "semantic-release": "25.0.2",
+    "shellcheck": "4.1.0"
+  },
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "lint-staged": {
+    "**/*": [
+      "editorconfig-checker"
+    ],
+    "{helm-git,**/*.{bash,sh}}": [
+      "shellcheck -x"
+    ]
+  }
+}
